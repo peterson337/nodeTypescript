@@ -14,6 +14,13 @@ routes.get("/", (req, res) => {
     })
 })
 
+routes.get("/users", async (req, res) => {
+    const post = await db.find();
+
+    res.json({
+        post: post
+    })
+})
 
 routes.post("/login", (req, res) => {
     const { username, email, password } = req.body;
