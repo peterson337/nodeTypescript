@@ -2,14 +2,15 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const dbSchema = new Schema({
+const UserSchema = new Schema({
     username: String,
     email: String,
     password: String,
+    cargo: String,
     dataHora: Number,
 })
 
 
-const db = mongoose.model("users", dbSchema);
+const User = mongoose.model("CreateUsers", UserSchema);
 
-export default db;
+export default User;
