@@ -17,10 +17,13 @@ routes.get("/", (req, res) => {
 })
 
 routes.get("/users", async (req, res) => {
-    const post = await db.find();
+    const post = await User.find();
+
+    const loading = true;
 
     res.json({
-        post: post
+        post: post,
+        loading: loading,
     })
 })
 
@@ -30,7 +33,7 @@ routes.get("/usersDetails/:slug", async (req, res) => {
 
     const id = req.params.slug 
     
-    const post = await db.findOneAndUpdate({_id: id}, {new: true}).then((postRes) => {
+    const post = await User.findOneAndUpdate({_id: id}, {new: true}).then((postRes) => {
 
         loading = false;
 
@@ -42,7 +45,7 @@ routes.get("/usersDetails/:slug", async (req, res) => {
 
 })
 
-routes.post("/login", (req, res) => {
+routes.post("/createLogin", (req, res) => {
     const { username, email, password, dataHora } = req.body;
         
     const user = {
@@ -57,6 +60,10 @@ routes.post("/login", (req, res) => {
      email: user.email,
      password: user.password,
      id: user.dataHora
+   })
+
+   res.json({
+    username:user.username,
    })
     
 })
@@ -77,6 +84,57 @@ const user = {
   password: user.password,
   cargo: user.cargo,
  })
+ 
+ res.json({
+     sucess: true,
+ })
+
+
+})
+
+routes.put("/updateUser/:id", async (req, res) => {
+
+    const id = req.params.id;
+
+    const {  userName: userName, email: email, password: password, cargo: cargo} = req.body;
+
+    const user = {
+        userName: userName,
+        email: email,
+        password: password,
+        cargo: cargo,
+    }
+
+        
+      User.updateOne({_id: id}, {
+        $set: {
+            username: user.userName,
+            email: user.email,
+            password: user.password,
+            cargo: user.cargo,
+        }
+      }, {new: true}).then((postRes) => {
+        
+          res.json({
+              sucess: true,
+          })
+      })
+
+
+})
+
+routes.delete("/deleteUser/:id", async (req, res) => {
+
+    
+    const id = req.params.id;
+    
+    console.log(id);
+    
+    await User.findOneAndDelete({_id: id}).then(() => {
+        res.json({
+            deleteUser: true,
+        })
+    })
 
 
 })
