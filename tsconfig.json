@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2021",                                  
     "module": "NodeNext",                                
+    "target": "ES2021",                                  
     "moduleResolution": "NodeNext",                      
      "baseUrl": "src",                                   
      "outDir": "dist",   

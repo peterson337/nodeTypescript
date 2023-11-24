@@ -68,6 +68,34 @@ routes.post("/createLogin", (req, res) => {
     
 })
 
+routes.post("/login", (req,res) => {
+const {  username: username, password: password} = req.body;
+
+const user = {
+    username: username,
+    password: password,
+}
+
+    const sendResponse = () => res.json({success: user.username});
+
+    const sendResponseError = () =>  res.json({success: null});
+
+            db.findOne({
+            username: user.username,
+            password: user.password
+        }).then((res) => {
+            const response = res;
+            if(response === null){
+                sendResponseError();
+            }else{
+
+                sendResponse();
+            }
+        })
+       
+ 
+})
+
 routes.post("/createUser", (req, res) => {
 const {  username: username, email: email, password: password, cargo: cargo} = req.body;
 
@@ -127,9 +155,7 @@ routes.delete("/deleteUser/:id", async (req, res) => {
 
     
     const id = req.params.id;
-    
-    console.log(id);
-    
+        
     await User.findOneAndDelete({_id: id}).then(() => {
         res.json({
             deleteUser: true,
