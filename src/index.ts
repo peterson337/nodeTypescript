@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-mongoose.connect(`mongodb+srv://User:${process.env.KEY}@cluster1.9yvxty2.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp`)
+mongoose.connect(`mongodb+srv://UserPrincipal:${process.env.KEY}@cluster1.9yvxty2.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp`)
 .then(() => console.log("MongoDB connected"))
 const app = express();
 app.use(express.json());
